@@ -113,7 +113,7 @@ readonly class ResponseBuilder
     public function unsupportedMediaType(array $allowedTypes): ResponseInterface
     {
         return $this->responseFactory
-            ->createResponse(HttpStatus::UnsupportdMediaType->value)
+            ->createResponse(HttpStatus::UnsupportedMediaType->value)
             ->withHeader('accept', implode(', ', $allowedTypes))
             ;
     }

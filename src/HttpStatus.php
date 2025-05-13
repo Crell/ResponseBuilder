@@ -23,5 +23,5 @@ enum HttpStatus: int
     case NotAcceptable = 406;
     case Gone = 410;
     /** Indicates the server cannot handle the Content-Type header */
-    case UnsupportdMediaType = 415;
+    case UnsupportedMediaType = 415;
 }
