@@ -6,6 +6,8 @@
 
 This library is a very simple convenience wrapper around the PSR-17 factory classes.  It provides a single, easy to use "builder" class that produces common PSR-7 response objects types.
 
+See the [ResponseBuilder](src/ResponseBuilder.php) class, as its methods should be fairly self-explantory just from their names.
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
