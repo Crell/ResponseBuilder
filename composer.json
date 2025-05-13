@@ -1,6 +1,6 @@
 {
-    "name": "crell/*",
-    "homepage": "https://github.com/Crell/*",
+    "name": "crell/response-builder",
+    "homepage": "https://github.com/Crell/ResponseBuilder",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
@@ -11,22 +11,25 @@
         }
     ],
     "require": {
-        "php": "~8.4"
+        "php": "~8.4",
+        "psr/http-message": "^2.0",
+        "psr/http-factory": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.1.0",
         "phpbench/phpbench": "^1.4.1",
-        "phpstan/phpstan": "^2.1.11"
+        "phpstan/phpstan": "^2.1.11",
+        "nyholm/psr7": "^1.8"
     },
     "autoload": {
         "psr-4": {
-            "Crell\\Foo\\": "src"
+            "Crell\\ResponseBuilder\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Crell\\Foo\\": "tests",
-            "Crell\\Foo\\Benchmarks\\": "benchmarks"
+            "Crell\\ResponseBuilder\\": "tests",
+            "Crell\\ResponseBuilder\\Benchmarks\\": "benchmarks"
         }
     },
     "scripts": {
