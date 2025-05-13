@@ -100,7 +100,7 @@ readonly class ResponseBuilder
     {
         return $this->responseFactory
             ->createResponse(HttpStatus::MethodNotAllowed->value)
-            ->withHeader('allow', implode(',', $allowedMethods))
+            ->withHeader('allow', implode(', ', array_map(strtoupper(...), $allowedMethods)))
         ;
     }
 
@@ -108,7 +108,7 @@ readonly class ResponseBuilder
     {
         return $this->responseFactory
             ->createResponse(HttpStatus::UnsupportdMediaType->value)
-            ->withHeader('accept', implode(',', $allowedTypes))
+            ->withHeader('accept', implode(', ', $allowedTypes))
             ;
     }
 }
