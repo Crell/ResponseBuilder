@@ -39,7 +39,7 @@ class ResponseBuilderTest extends TestCase
     #[Test]
     public function arbitrary_with_stream_body(): void
     {
-        $stream = new Psr17Factory()->createStream('Hello World');
+        $stream = (new Psr17Factory())->createStream('Hello World');
         $response = $this->builder()->createResponse(HttpStatus::OK, $stream);
 
         self::assertEquals('Hello World', $response->getBody()->getContents());
