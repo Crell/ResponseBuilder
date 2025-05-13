@@ -96,6 +96,9 @@ readonly class ResponseBuilder
         return $this->createResponse(HttpStatus::Gone->value, $body, $contentType);
     }
 
+    /**
+     * @param string[] $allowedMethods
+     */
     public function methodNotAllowed(array $allowedMethods): ResponseInterface
     {
         return $this->responseFactory
@@ -104,6 +107,9 @@ readonly class ResponseBuilder
         ;
     }
 
+    /**
+     * @param string[] $allowedTypes
+     */
     public function unsupportedMediaType(array $allowedTypes): ResponseInterface
     {
         return $this->responseFactory
