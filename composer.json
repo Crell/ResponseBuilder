@@ -1,6 +1,6 @@
 {
-    "name": "crell/response-builder",
-    "homepage": "https://github.com/Crell/ResponseBuilder",
+    "name": "crell/http-tools",
+    "homepage": "https://github.com/Crell/HttpTools",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
@@ -23,13 +23,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Crell\\ResponseBuilder\\": "src"
+            "Crell\\HttpTools\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Crell\\ResponseBuilder\\": "tests",
-            "Crell\\ResponseBuilder\\Benchmarks\\": "benchmarks"
+            "Crell\\HttpTools\\": "tests",
+            "Crell\\HttpTools\\Benchmarks\\": "benchmarks"
         }
     },
     "scripts": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Crell\ResponseBuilder;
+namespace Crell\HttpTools;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\Attributes\Test;

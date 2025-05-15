@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Crell\ResponseBuilder;
+namespace Crell\HttpTools;
 
 enum HttpStatus: int
 {

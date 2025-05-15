@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Crell\ResponseBuilder;
+namespace Crell\HttpTools;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
