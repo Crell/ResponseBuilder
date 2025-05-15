@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Crell\HttpTools;
+namespace Crell\HttpTools\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -20,17 +19,17 @@ use Psr\Http\Server\RequestHandlerInterface;
 class DefaultContentTypeMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly ?string $defaultContentType = null,
-        private readonly ?string $defaultAcceptType = null,
+        private readonly ?string $contentType = null,
+        private readonly ?string $acceptType = null,
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->defaultContentType && !$request->getHeaderLine('content-type')) {
-            $request = $request->withHeader('content-type', $this->defaultContentType);
+        if ($this->contentType && !$request->getHeaderLine('content-type')) {
+            $request = $request->withHeader('content-type', $this->contentType);
         }
-        if ($this->defaultAcceptType && !$request->getHeaderLine('accept')) {
-            $request = $request->withHeader('accept', $this->defaultAcceptType);
+        if ($this->acceptType && !$request->getHeaderLine('accept')) {
+            $request = $request->withHeader('accept', $this->acceptType);
         }
 
         return $handler->handle($request);
