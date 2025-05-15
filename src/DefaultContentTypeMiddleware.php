@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Crell\HttpTools;
+
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+/**
+ * Sets default content -ype and accept headers.
+ *
+ * Some APIs will always be used with a certain format (usually application/json), so allow
+ * clients to omit the content-type or accept headers.  This middleware adds defaults to a request
+ * so that later processing can rely on those headers always being set.
+ */
+class DefaultContentTypeMiddleware implements MiddlewareInterface
+{
+    public function __construct(
+        private readonly ?string $defaultContentType = null,
+        private readonly ?string $defaultAcceptType = null,
+    ) {}
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        if ($this->defaultContentType && !$request->getHeaderLine('content-type')) {
+            $request = $request->withHeader('content-type', $this->defaultContentType);
+        }
+        if ($this->defaultAcceptType && !$request->getHeaderLine('accept')) {
+            $request = $request->withHeader('accept', $this->defaultAcceptType);
+        }
+
+        return $handler->handle($request);
+    }
+}
