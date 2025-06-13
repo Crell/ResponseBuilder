@@ -124,6 +124,15 @@ class ResponseBuilderTest extends TestCase
     }
 
     #[Test]
+    public function unauthorized(): void
+    {
+        $response = $this->builder()->unauthorized('Unauthorized');
+
+        self::assertEquals('Unauthorized', $response->getBody()->getContents());
+        self::assertEquals(401, $response->getStatusCode());
+    }
+
+    #[Test]
     public function notFound(): void
     {
         $response = $this->builder()->notFound('Not Found');

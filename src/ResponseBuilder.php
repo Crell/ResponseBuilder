@@ -154,6 +154,17 @@ class ResponseBuilder
     }
 
     /**
+     * Creates an HTTP 401 client error.
+     *
+     * Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated".
+     * That is, the client must authenticate itself to get the requested response.
+     */
+    public function unauthorized(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
+    {
+        return $this->createResponse(HttpStatus::Unauthorized->value, $body, $contentType);
+    }
+
+    /**
      * Creates an HTTP 403 client error.
      *
      * The client does not have access rights to the content; that is, it is unauthorized,
