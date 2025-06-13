@@ -83,18 +83,6 @@ class ResponseBuilder
     }
 
     /**
-     * Creates an HTTP 304 response.
-     *
-     * This is used for caching purposes. It tells the client that the response has not been modified,
-     * so the client can continue to use the same cached version of the response.
-     */
-    public function notModified(): ResponseInterface
-    {
-        return $this->responseFactory
-            ->createResponse(HttpStatus::NotModified->value);
-    }
-
-    /**
      * Creates an HTTP 303 redirect response.
      *
      * The server sent this response to direct the client to get the
@@ -105,6 +93,18 @@ class ResponseBuilder
         return $this->responseFactory
             ->createResponse(HttpStatus::SeeOther->value)
             ->withHeader('location', $location);
+    }
+
+    /**
+     * Creates an HTTP 304 response.
+     *
+     * This is used for caching purposes. It tells the client that the response has not been modified,
+     * so the client can continue to use the same cached version of the response.
+     */
+    public function notModified(): ResponseInterface
+    {
+        return $this->responseFactory
+            ->createResponse(HttpStatus::NotModified->value);
     }
 
     /**
@@ -154,19 +154,6 @@ class ResponseBuilder
     }
 
     /**
-     * Creates an HTTP 404 client error.
-     *
-     * The server cannot find the requested resource. In the browser, this means the URL is
-     * not recognized. In an API, this can also mean that the endpoint is valid but the
-     * resource itself does not exist. Servers may also send this response instead of
-     * 403 Forbidden to hide the existence of a resource from an unauthorized client.
-     */
-    public function notFound(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
-    {
-        return $this->createResponse(HttpStatus::NotFound->value, $body, $contentType);
-    }
-
-    /**
      * Creates an HTTP 403 client error.
      *
      * The client does not have access rights to the content; that is, it is unauthorized,
@@ -179,17 +166,16 @@ class ResponseBuilder
     }
 
     /**
-     * Creates an HTTP 410 client error.
+     * Creates an HTTP 404 client error.
      *
-     * This response is sent when the requested content has been permanently deleted from server,
-     * with no forwarding address. Clients are expected to remove their caches and links to the
-     * resource. The HTTP specification intends this status code to be used for "limited-time,
-     * promotional services". APIs should not feel compelled to indicate resources that have
-     * been deleted with this status code.
+     * The server cannot find the requested resource. In the browser, this means the URL is
+     * not recognized. In an API, this can also mean that the endpoint is valid but the
+     * resource itself does not exist. Servers may also send this response instead of
+     * 403 Forbidden to hide the existence of a resource from an unauthorized client.
      */
-    public function gone(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
+    public function notFound(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
     {
-        return $this->createResponse(HttpStatus::Gone->value, $body, $contentType);
+        return $this->createResponse(HttpStatus::NotFound->value, $body, $contentType);
     }
 
     /**
@@ -205,7 +191,21 @@ class ResponseBuilder
         return $this->responseFactory
             ->createResponse(HttpStatus::MethodNotAllowed->value)
             ->withHeader('allow', implode(', ', array_map(strtoupper(...), $allowedMethods)))
-        ;
+            ;
+    }
+
+    /**
+     * Creates an HTTP 410 client error.
+     *
+     * This response is sent when the requested content has been permanently deleted from server,
+     * with no forwarding address. Clients are expected to remove their caches and links to the
+     * resource. The HTTP specification intends this status code to be used for "limited-time,
+     * promotional services". APIs should not feel compelled to indicate resources that have
+     * been deleted with this status code.
+     */
+    public function gone(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
+    {
+        return $this->createResponse(HttpStatus::Gone->value, $body, $contentType);
     }
 
     /**
