@@ -81,6 +81,11 @@ class ResponseBuilder
             ->withHeader('location', $location);
     }
 
+    public function badRequest(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
+    {
+        return $this->createResponse(HttpStatus::BadRequest->value, $body, $contentType);
+    }
+
     public function notFound(string|StreamInterface $body, ?string $contentType = null): ResponseInterface
     {
         return $this->createResponse(HttpStatus::NotFound->value, $body, $contentType);

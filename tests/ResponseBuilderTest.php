@@ -115,6 +115,15 @@ class ResponseBuilderTest extends TestCase
     }
 
     #[Test]
+    public function badRequest(): void
+    {
+        $response = $this->builder()->badRequest('Bad Request');
+
+        self::assertEquals('Bad Request', $response->getBody()->getContents());
+        self::assertEquals(400, $response->getStatusCode());
+    }
+
+    #[Test]
     public function notFound(): void
     {
         $response = $this->builder()->notFound('Not Found');
