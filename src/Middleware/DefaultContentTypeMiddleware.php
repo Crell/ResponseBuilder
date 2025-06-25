@@ -10,7 +10,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Sets default content -ype and accept headers.
+ * Sets default content-type and accept headers.
  *
  * Some APIs will always be used with a certain format (usually application/json), so allow
  * clients to omit the content-type or accept headers.  This middleware adds defaults to a request
