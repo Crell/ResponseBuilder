@@ -5,6 +5,6 @@ declare(strict_types=1);
 namespace Crell\HttpTools\Router;
 
 /**
- * This class really wants to be a tagged enum. :-(
+ * This interface really wants to be a tagged enum. :-(
  */
-readonly class RouteResult {}
+interface RouteResult {}

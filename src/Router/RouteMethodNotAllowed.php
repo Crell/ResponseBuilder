@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Crell\HttpTools\Router;
 
-readonly class RouteMethodNotAllowed extends RouteResult
+readonly class RouteMethodNotAllowed implements RouteResult
 {
     /**
      * @param string[] $allowedMethods

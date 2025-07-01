@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Crell\HttpTools\Router;
 
-readonly class RouteSuccess extends RouteResult
+readonly class RouteSuccess implements RouteResult
 {
     /**
      * @param array<string, string> $parameters
