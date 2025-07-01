@@ -42,14 +42,15 @@ class DelegatingRouterTest extends TestCase
         self::assertEquals($method, $result->method);
     }
 
-    #[Test, TestDox('With just a default router, the default is always reached')]
+    #[Test, TestDox('A delegated router handles the correct routes')]
     #[TestWith(['method' => 'GET', 'url' => '/foo', 'router1'])]
     #[TestWith(['method' => 'POST', 'url' => '/foo', 'router1'])]
     #[TestWith(['method' => 'POST', 'url' => '/foo/bar', 'router1'])]
     #[TestWith(['method' => 'POST', 'url' => '/foo/bar.php', 'router1'])]
     #[TestWith(['method' => 'GET', 'url' => '/', 'default'])]
     #[TestWith(['method' => 'GET', 'url' => '/baz', 'default'])]
-    public function rightRouter(string $method, string $url, string $expected): void
+    #[TestWith(['method' => 'GET', 'url' => '/foobar', 'default'])]
+    public function pathRouter(string $method, string $url, string $expected): void
     {
         $r1 = new readonly class($method) implements Router {
             public function __construct(private string $method) {}
@@ -69,5 +70,4 @@ class DelegatingRouterTest extends TestCase
         self::assertEquals($expected, $result->action);
         self::assertEquals($method, $result->method);
     }
-
 }
