@@ -13,7 +13,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class DelegatingRouterTest extends TestCase
 {
-
     private function defaultRouter(string $method): Router
     {
         return new readonly class($method) implements Router {

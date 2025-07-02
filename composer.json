@@ -18,10 +18,13 @@
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5.46",
+        "fig/log-test": "^1.1",
+        "nyholm/psr7": "^1.8",
         "phpbench/phpbench": "^1.4.1",
         "phpstan/phpstan": "^2.1.11",
-        "nyholm/psr7": "^1.8"
+        "phpunit/phpunit": "^10.5.46",
+        "psr/event-dispatcher": "^1.0",
+        "psr/log": "^3.0"
     },
     "autoload": {
         "psr-4": {
