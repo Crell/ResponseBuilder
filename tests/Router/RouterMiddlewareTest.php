@@ -15,24 +15,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class RouterMiddlewareTest extends TestCase
 {
-    private function fakeNext(): RequestHandlerInterface
-    {
-        return new class implements RequestHandlerInterface {
-            private(set) ?ServerRequestInterface $request = null;
-            public function handle(ServerRequestInterface $request): ResponseInterface
-            {
-                $this->request = $request;
-                $routeResult = $request->getAttribute(RouteResult::class);
-                return match ($routeResult::class) {
-                    RouteSuccess::class => new Response(200, body: 'from next'),
-                    RouteNotFound::class => new Response(404, body: 'from next'),
-                    RouteMethodNotAllowed::class => new Response(405, body: 'from next'),
-                    default => throw new \Exception('Incomprehensible result.'),
-                };
-            }
-        };
-    }
-
     private function successRouter(): Router
     {
         return $this->mockRouter(new RouteSuccess('success', 'GET'));
@@ -56,7 +38,7 @@ class RouterMiddlewareTest extends TestCase
         $request = new ServerRequest('GET', '/foo');
 
         $middleware = new RouterMiddleware($this->successRouter());
-        $response = $middleware->process($request, $this->fakeNext());
+        $response = $middleware->process($request, new FakeNext());
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals('from next', $response->getBody()->getContents());
@@ -70,7 +52,7 @@ class RouterMiddlewareTest extends TestCase
         $router = $this->mockRouter(new RouteNotFound());
 
         $middleware = new RouterMiddleware($router);
-        $response = $middleware->process($request, $this->fakeNext());
+        $response = $middleware->process($request, new FakeNext());
 
         self::assertEquals('from next', $response->getBody()->getContents());
         self::assertEquals(404, $response->getStatusCode());
@@ -80,7 +62,7 @@ class RouterMiddlewareTest extends TestCase
     public function handlerRoutingNotFound(): void
     {
         $request = new ServerRequest('GET', '/foo');
-        $next = $this->fakeNext();
+        $next = new FakeNext();
         $router = $this->mockRouter(new RouteNotFound());
 
         $notFoundHandler = new readonly class implements RequestHandlerInterface {
@@ -93,7 +75,6 @@ class RouterMiddlewareTest extends TestCase
         $middleware = new RouterMiddleware($router, notFoundHandler: $notFoundHandler);
         $response = $middleware->process($request, $next);
 
-        // @phpstan-ignore-next-line
         self::assertNull($next->request);
         self::assertEquals('from handler', $response->getBody()->getContents());
         self::assertEquals(404, $response->getStatusCode());
@@ -107,18 +88,17 @@ class RouterMiddlewareTest extends TestCase
         $router = $this->mockRouter(new RouteMethodNotAllowed(['POST']));
 
         $middleware = new RouterMiddleware($router);
-        $response = $middleware->process($request, $this->fakeNext());
+        $response = $middleware->process($request, new FakeNext());
 
         self::assertEquals('from next', $response->getBody()->getContents());
         self::assertEquals(405, $response->getStatusCode());
     }
 
-
     #[Test, TestDox('A disallowed route with a handler calls the handler')]
     public function handlerMethodNotAllowed(): void
     {
         $request = new ServerRequest('GET', '/foo');
-        $next = $this->fakeNext();
+        $next = new FakeNext();
         $router = $this->mockRouter(new RouteMethodNotAllowed(['POST']));
 
         $methodNotAllowedHandler = new readonly class implements RequestHandlerInterface {
@@ -131,7 +111,6 @@ class RouterMiddlewareTest extends TestCase
         $middleware = new RouterMiddleware($router, methodNotAllowedHandler: $methodNotAllowedHandler);
         $response = $middleware->process($request, $next);
 
-        // @phpstan-ignore-next-line
         self::assertNull($next->request);
         self::assertEquals('from handler', $response->getBody()->getContents());
         self::assertEquals(405, $response->getStatusCode());
